@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Pearl! 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --hot-pink: #FF2D8B;
+  --orange:   #FF6B2B;
+  --yellow:   #FFE135;
+  --cyan:     #00E5FF;
+  --purple:   #BF00FF;
+  --lime:     #AAFF00;
+  --white:    #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  background: #0D0020;
+  overflow-x: hidden;
+}
+
+/* ── Animated background ── */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at 20% 20%, #3D0066 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 10%, #001A66 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 80%, #660033 0%, transparent 55%),
+              #0D0020;
+  animation: bgPulse 6s ease-in-out infinite alternate;
+}
+@keyframes bgPulse {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(40deg); }
+}
+
+/* ── Confetti canvas ── */
+#confetti { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+/* ── Sparkles ── */
+.sparkles { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+.sparkle {
+  position: absolute;
+  width: 6px; height: 6px;
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  animation: sparklePop ease-in-out infinite;
+}
+@keyframes sparklePop {
+  0%,100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50%      { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+/* ── Page layout ── */
+.page {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 80px;
+}
+
+/* ── Disco ball ── */
+.disco-wrap {
+  position: relative;
+  margin-bottom: 10px;
+  animation: floatBall 3s ease-in-out infinite;
+}
+@keyframes floatBall {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+.disco-ball {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #ffffff 0%, transparent 35%),
+    conic-gradient(
+      #ff2d8b 0deg, #ff6b2b 40deg, #ffe135 80deg,
+      #aaff00 120deg, #00e5ff 160deg, #bf00ff 200deg,
+      #ff2d8b 240deg, #ff6b2b 280deg, #ffe135 320deg, #ff2d8b 360deg
+    );
+  box-shadow: 0 0 40px 10px rgba(255,45,139,0.5),
+              0 0 80px 20px rgba(0,229,255,0.3),
+              inset 0 0 20px rgba(255,255,255,0.2);
+  animation: spinBall 4s linear infinite;
+  position: relative;
+}
+@keyframes spinBall {
+  from { filter: hue-rotate(0deg) brightness(1.1); }
+  to   { filter: hue-rotate(360deg) brightness(1.3); }
+}
+.disco-string {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+  margin: 0 auto;
+}
+
+/* ── Banner ── */
+.banner {
+  display: flex;
+  gap: 0;
+  margin: 20px 0 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.banner-char {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(36px, 9vw, 72px);
+  display: inline-block;
+  animation: charBounce 0.6s ease-in-out infinite alternate;
+  text-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+  padding: 0 2px;
+}
+@keyframes charBounce {
+  from { transform: translateY(0) rotate(-3deg) scale(1); }
+  to   { transform: translateY(-10px) rotate(3deg) scale(1.05); }
+}
+
+/* ── Pearl name ── */
+.pearl-name {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(64px, 18vw, 140px);
+  background: linear-gradient(135deg, #FF2D8B, #FF6B2B, #FFE135, #AAFF00, #00E5FF, #BF00FF, #FF2D8B);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: nameShimmer 3s ease infinite, namePop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  line-height: 1.1;
+  filter: drop-shadow(0 0 30px rgba(255, 45, 139, 0.6));
+}
+@keyframes nameShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes namePop {
+  from { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* ── Cake section ── */
+.cake-section {
+  position: relative;
+  margin: 30px 0 20px;
+}
+.cake {
+  position: relative;
+  width: 260px;
+  margin: 0 auto;
+}
+
+/* Candles */
+.candles-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: -2px;
+  position: relative;
+  z-index: 2;
+}
+.candle { display: flex; flex-direction: column; align-items: center; }
+.flame-wrap { position: relative; width: 14px; height: 24px; }
+.flame {
+  width: 14px; height: 22px;
+  border-radius: 50% 50% 20% 20%;
+  position: absolute;
+  bottom: 0;
+  animation: flicker 0.4s ease-in-out infinite alternate;
+}
+.flame.f1 { background: radial-gradient(ellipse at 50% 80%, #fff, #ffe135 40%, #ff6b2b 80%); }
+.flame.f2 { background: radial-gradient(ellipse at 50% 80%, #fff, #00e5ff 40%, #bf00ff 80%); }
+.flame.f3 { background: radial-gradient(ellipse at 50% 80%, #fff, #aaff00 40%, #00e5ff 80%); }
+.flame.f4 { background: radial-gradient(ellipse at 50% 80%, #fff, #ff2d8b 40%, #bf00ff 80%); }
+.flame.f5 { background: radial-gradient(ellipse at 50% 80%, #fff, #ffe135 40%, #ff2d8b 80%); }
+@keyframes flicker {
+  0%   { transform: scaleX(1)    scaleY(1)    skewX(0deg);  opacity: 1; }
+  100% { transform: scaleX(0.85) scaleY(1.15) skewX(5deg);  opacity: 0.85; }
+}
+.candle-stick {
+  width: 14px;
+  height: 50px;
+  border-radius: 3px;
+  margin-top: 1px;
+}
+.cs1 { background: linear-gradient(to bottom, #FF2D8B, #FF6B2B); }
+.cs2 { background: linear-gradient(to bottom, #BF00FF, #00E5FF); }
+.cs3 { background: linear-gradient(to bottom, #FFE135, #AAFF00); }
+.cs4 { background: linear-gradient(to bottom, #00E5FF, #BF00FF); }
+.cs5 { background: linear-gradient(to bottom, #FF6B2B, #FF2D8B); }
+
+/* Cake layers */
+.cake-layer {
+  width: 100%;
+  position: relative;
+  overflow: visible;
+}
+.layer-t {
+  height: 65px;
+  background: linear-gradient(135deg, #FF2D8B, #BF00FF);
+  border-radius: 12px 12px 4px 4px;
+  margin-bottom: 3px;
+}
+.layer-m {
+  height: 75px;
+  background: linear-gradient(135deg, #FF6B2B, #FF2D8B);
+  margin-bottom: 3px;
+  border-radius: 4px;
+}
+.layer-b {
+  height: 85px;
+  background: linear-gradient(135deg, #FFE135, #FF6B2B);
+  border-radius: 4px 4px 12px 12px;
+}
+
+/* Frosting */
+.frosting {
+  position: absolute;
+  top: -10px; left: 0; right: 0;
+  height: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  pointer-events: none;
+}
+.drip-blob {
+  border-radius: 0 0 50% 50%;
+  background: rgba(255,255,255,0.85);
+}
+
+/* Sprinkles */
+.sprinkle {
+  position: absolute;
+  border-radius: 2px;
+  transform: rotate(var(--r));
+}
+
+/* Stars on cake */
+.cake-star {
+  position: absolute;
+  font-size: 18px;
+  animation: starSpin 2s linear infinite;
+}
+@keyframes starSpin {
+  from { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.3); }
+  to   { transform: rotate(360deg) scale(1); }
+}
+
+/* Cake glow */
+.cake-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,45,139,0.25) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowPulse 2s ease-in-out infinite alternate;
+  z-index: -1;
+}
+@keyframes glowPulse {
+  from { opacity: 0.5; transform: scale(0.95); }
+  to   { opacity: 1;   transform: scale(1.05); }
+}
+
+/* ── Balloons ── */
+.balloons-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0 24px;
+}
+.bal-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bobBalloon ease-in-out infinite;
+}
+.bal-wrap:nth-child(1) { animation-duration: 2.2s; animation-delay: 0s; }
+.bal-wrap:nth-child(2) { animation-duration: 2.8s; animation-delay: 0.3s; }
+.bal-wrap:nth-child(3) { animation-duration: 2.5s; animation-delay: 0.6s; }
+.bal-wrap:nth-child(4) { animation-duration: 3.0s; animation-delay: 0.1s; }
+.bal-wrap:nth-child(5) { animation-duration: 2.4s; animation-delay: 0.8s; }
+.bal-wrap:nth-child(6) { animation-duration: 2.7s; animation-delay: 0.4s; }
+@keyframes bobBalloon {
+  0%,100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-18px) rotate(5deg); }
+}
+.bal-string {
+  width: 1.5px;
+  height: 36px;
+  background: rgba(255,255,255,0.4);
+}
+
+/* ── Gift box ── */
+.gifts {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 16px 0 32px;
+  flex-wrap: wrap;
+}
+.gift {
+  position: relative;
+  animation: giftWiggle 1.5s ease-in-out infinite;
+}
+.gift:nth-child(2) { animation-delay: 0.5s; }
+.gift:nth-child(3) { animation-delay: 1s; }
+@keyframes giftWiggle {
+  0%,100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+.gift-body {
+  width: 70px; height: 60px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.gift-body::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 12px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.3);
+}
+.gift-body::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 12px;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.3);
+}
+.gift-lid {
+  width: 80px; height: 18px;
+  border-radius: 4px;
+  margin: 0 auto 0;
+  position: relative;
+  left: -5px;
+}
+.gift-bow {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+}
+.g1 .gift-body { background: linear-gradient(135deg, #FF2D8B, #BF00FF); }
+.g1 .gift-lid  { background: linear-gradient(90deg, #FF6B2B, #FF2D8B); }
+.g2 .gift-body { background: linear-gradient(135deg, #00E5FF, #AAFF00); }
+.g2 .gift-lid  { background: linear-gradient(90deg, #AAFF00, #00E5FF); }
+.g3 .gift-body { background: linear-gradient(135deg, #FFE135, #FF6B2B); }
+.g3 .gift-lid  { background: linear-gradient(90deg, #FF2D8B, #FFE135); }
+
+/* ── Message ── */
+.msg-wrap {
+  position: relative;
+  margin: 8px 0 30px;
+  max-width: 500px;
+  padding: 28px 36px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,
+    rgba(255,45,139,0.18),
+    rgba(0,229,255,0.12),
+    rgba(191,0,255,0.18)
+  );
+  border: 1.5px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  animation: msgFloat 4s ease-in-out infinite;
+}
+@keyframes msgFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.msg-text {
+  font-size: clamp(15px, 3vw, 19px);
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.92);
+}
+.msg-text strong {
+  font-weight: 900;
+  background: linear-gradient(90deg, #FFE135, #FF6B2B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Emoji marquee ── */
+.marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  margin: 0 0 8px;
+  padding: 10px 0;
+}
+.marquee-inner {
+  display: flex;
+  gap: 20px;
+  animation: marqueeScroll 12s linear infinite;
+  width: max-content;
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-item {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+}
+
+/* ── Footer text ── */
+.footer-glow {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-top: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<canvas id="confetti"></canvas>
+<div class="sparkles" id="sparkles"></div>
+
+<div class="page">
+
+  <!-- Disco ball -->
+  <div class="disco-wrap">
+    <div class="disco-string"></div>
+    <div class="disco-ball"></div>
+  </div>
+
+  <!-- Happy Birthday banner -->
+  <div class="banner" id="banner"></div>
+
+  <!-- Pearl name -->
+  <div class="pearl-name">Pearl</div>
+
+  <!-- Emoji marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner" id="marquee"></div>
+  </div>
+
+  <!-- Cake -->
+  <div class="cake-section">
+    <div class="cake-glow"></div>
+    <div class="cake">
+
+      <!-- Candles -->
+      <div class="candles-row">
+        <div class="candle"><div class="flame-wrap"><div class="flame f1"></div></div><div class="candle-stick cs1"></div></div>
+        <div class="candle"><div class="flame-wrap"><div class="flame f2"></div></div><div class="candle-stick cs2"></div></div>
+        <div class="candle"><div class="flame-wrap"><div class="flame f3"></div></div><div class="candle-stick cs3"></div></div>
+        <div class="candle"><div class="flame-wrap"><div class="flame f4"></div></div><div class="candle-stick cs4"></div></div>
+        <div class="candle"><div class="flame-wrap"><div class="flame f5"></div></div><div class="candle-stick cs5"></div></div>
+      </div>
+
+      <!-- Top layer -->
+      <div class="cake-layer layer-t" style="position:relative;">
+        <div class="frosting">
+          <div class="drip-blob" style="width:22px;height:18px;"></div>
+          <div class="drip-blob" style="width:18px;height:24px;"></div>
+          <div class="drip-blob" style="width:26px;height:14px;"></div>
+          <div class="drip-blob" style="width:20px;height:20px;"></div>
+          <div class="drip-blob" style="width:16px;height:22px;"></div>
+        </div>
+        <!-- sprinkles -->
+        <div class="sprinkle" style="width:18px;height:5px;background:#FFE135;top:20px;left:30px;--r:30deg;"></div>
+        <div class="sprinkle" style="width:14px;height:5px;background:#00E5FF;top:35px;left:80px;--r:-20deg;"></div>
+        <div class="sprinkle" style="width:16px;height:5px;background:#AAFF00;top:15px;left:140px;--r:45deg;"></div>
+        <div class="sprinkle" style="width:18px;height:5px;background:#FF2D8B;top:40px;left:190px;--r:-15deg;"></div>
+      </div>
+
+      <!-- Mid layer -->
+      <div class="cake-layer layer-m" style="position:relative;">
+        <div class="frosting">
+          <div class="drip-blob" style="width:20px;height:22px;"></div>
+          <div class="drip-blob" style="width:24px;height:16px;"></div>
+          <div class="drip-blob" style="width:18px;height:26px;"></div>
+          <div class="drip-blob" style="width:22px;height:18px;"></div>
+          <div class="drip-blob" style="width:20px;height:24px;"></div>
+        </div>
+        <div class="sprinkle" style="width:16px;height:5px;background:#BF00FF;top:22px;left:20px;--r:-35deg;"></div>
+        <div class="sprinkle" style="width:20px;height:5px;background:#FFE135;top:45px;left:60px;--r:25deg;"></div>
+        <div class="sprinkle" style="width:14px;height:5px;background:#FF2D8B;top:18px;left:120px;--r:-10deg;"></div>
+        <div class="sprinkle" style="width:18px;height:5px;background:#00E5FF;top:50px;left:170px;--r:40deg;"></div>
+        <div class="sprinkle" style="width:16px;height:5px;background:#AAFF00;top:30px;left:210px;--r:-20deg;"></div>
+        <div class="cake-star" style="top:10px;left:48px;animation-delay:-0.5s;">✦</div>
+        <div class="cake-star" style="top:28px;right:40px;animation-delay:-1s;font-size:14px;">✦</div>
+      </div>
+
+      <!-- Bottom layer -->
+      <div class="cake-layer layer-b" style="position:relative;">
+        <div class="frosting">
+          <div class="drip-blob" style="width:24px;height:20px;"></div>
+          <div class="drip-blob" style="width:20px;height:28px;"></div>
+          <div class="drip-blob" style="width:26px;height:16px;"></div>
+          <div class="drip-blob" style="width:22px;height:24px;"></div>
+          <div class="drip-blob" style="width:18px;height:20px;"></div>
+          <div class="drip-blob" style="width:24px;height:18px;"></div>
+        </div>
+        <div class="sprinkle" style="width:20px;height:5px;background:#FF2D8B;top:25px;left:15px;--r:15deg;"></div>
+        <div class="sprinkle" style="width:16px;height:5px;background:#BF00FF;top:50px;left:55px;--r:-30deg;"></div>
+        <div class="sprinkle" style="width:22px;height:5px;background:#00E5FF;top:30px;left:100px;--r:20deg;"></div>
+        <div class="sprinkle" style="width:14px;height:5px;background:#FFE135;top:60px;left:150px;--r:-40deg;"></div>
+        <div class="sprinkle" style="width:18px;height:5px;background:#AAFF00;top:20px;left:200px;--r:35deg;"></div>
+        <div class="cake-star" style="top:18px;left:72px;animation-delay:-0.3s;color:#fff;">✦</div>
+        <div class="cake-star" style="top:40px;right:55px;animation-delay:-0.8s;font-size:14px;color:#fff;">✦</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Balloons -->
+  <div class="balloons-row">
+    <div class="bal-wrap">
+      <svg width="50" height="65" viewBox="0 0 50 65"><defs><radialGradient id="bg1" cx="35%" cy="35%"><stop offset="0%" stop-color="#ff9de8"/><stop offset="100%" stop-color="#FF2D8B"/></radialGradient></defs><ellipse cx="25" cy="26" rx="20" ry="23" fill="url(#bg1)"/><ellipse cx="18" cy="17" rx="6" ry="7" fill="rgba(255,255,255,0.3)"/><path d="M25 49 Q23 57 25 63 Q27 57 25 49Z" fill="#FF2D8B"/></svg>
+      <div class="bal-string"></div>
+    </div>
+    <div class="bal-wrap">
+      <svg width="50" height="65" viewBox="0 0 50 65"><defs><radialGradient id="bg2" cx="35%" cy="35%"><stop offset="0%" stop-color="#c0ffee"/><stop offset="100%" stop-color="#00E5FF"/></radialGradient></defs><ellipse cx="25" cy="26" rx="20" ry="23" fill="url(#bg2)"/><ellipse cx="18" cy="17" rx="6" ry="7" fill="rgba(255,255,255,0.3)"/><path d="M25 49 Q23 57 25 63 Q27 57 25 49Z" fill="#00E5FF"/></svg>
+      <div class="bal-string"></div>
+    </div>
+    <div class="bal-wrap">
+      <svg width="58" height="75" viewBox="0 0 58 75"><defs><radialGradient id="bg3" cx="35%" cy="35%"><stop offset="0%" stop-color="#e8aaff"/><stop offset="100%" stop-color="#BF00FF"/></radialGradient></defs><ellipse cx="29" cy="29" rx="24" ry="27" fill="url(#bg3)"/><ellipse cx="21" cy="19" rx="7" ry="8" fill="rgba(255,255,255,0.3)"/><path d="M29 56 Q27 65 29 72 Q31 65 29 56Z" fill="#BF00FF"/></svg>
+      <div class="bal-string"></div>
+    </div>
+    <div class="bal-wrap">
+      <svg width="50" height="65" viewBox="0 0 50 65"><defs><radialGradient id="bg4" cx="35%" cy="35%"><stop offset="0%" stop-color="#fff7aa"/><stop offset="100%" stop-color="#FFE135"/></radialGradient></defs><ellipse cx="25" cy="26" rx="20" ry="23" fill="url(#bg4)"/><ellipse cx="18" cy="17" rx="6" ry="7" fill="rgba(255,255,255,0.3)"/><path d="M25 49 Q23 57 25 63 Q27 57 25 49Z" fill="#FFE135"/></svg>
+      <div class="bal-string"></div>
+    </div>
+    <div class="bal-wrap">
+      <svg width="50" height="65" viewBox="0 0 50 65"><defs><radialGradient id="bg5" cx="35%" cy="35%"><stop offset="0%" stop-color="#ccff88"/><stop offset="100%" stop-color="#AAFF00"/></radialGradient></defs><ellipse cx="25" cy="26" rx="20" ry="23" fill="url(#bg5)"/><ellipse cx="18" cy="17" rx="6" ry="7" fill="rgba(255,255,255,0.3)"/><path d="M25 49 Q23 57 25 63 Q27 57 25 49Z" fill="#AAFF00"/></svg>
+      <div class="bal-string"></div>
+    </div>
+    <div class="bal-wrap">
+      <svg width="50" height="65" viewBox="0 0 50 65"><defs><radialGradient id="bg6" cx="35%" cy="35%"><stop offset="0%" stop-color="#ffb07a"/><stop offset="100%" stop-color="#FF6B2B"/></radialGradient></defs><ellipse cx="25" cy="26" rx="20" ry="23" fill="url(#bg6)"/><ellipse cx="18" cy="17" rx="6" ry="7" fill="rgba(255,255,255,0.3)"/><path d="M25 49 Q23 57 25 63 Q27 57 25 49Z" fill="#FF6B2B"/></svg>
+      <div class="bal-string"></div>
+    </div>
+  </div>
+
+  <!-- Message card -->
+  <div class="msg-wrap">
+    <p class="msg-text">
+      Today the whole universe pauses<br>
+      just to celebrate <strong>YOU</strong>, Pearl! 🌟<br><br>
+      May your day be as bright, bold,<br>
+      and absolutely <strong>extraordinary</strong><br>
+      as you are. 🎊
+    </p>
+  </div>
+
+  <!-- Gifts -->
+  <div class="gifts">
+    <div class="gift g1">
+      <div class="gift-lid"></div>
+      <div class="gift-body"></div>
+      <div class="gift-bow">🎀</div>
+    </div>
+    <div class="gift g2">
+      <div class="gift-lid"></div>
+      <div class="gift-body"></div>
+      <div class="gift-bow">🎀</div>
+    </div>
+    <div class="gift g3">
+      <div class="gift-lid"></div>
+      <div class="gift-body"></div>
+      <div class="gift-bow">🎀</div>
+    </div>
+  </div>
+
+  <p class="footer-glow">🎉 made with love for Pearl's special day 🎉</p>
+
+</div>
+
+<script>
+// ── Banner text ──
+const bannerEl = document.getElementById('banner');
+const text = 'Happy Birthday!';
+const colors = ['#FF2D8B','#FF6B2B','#FFE135','#AAFF00','#00E5FF','#BF00FF','#FF2D8B','#FF6B2B','#FFE135','#AAFF00','#00E5FF','#BF00FF','#FF2D8B','#FF6B2B','#FFE135'];
+text.split('').forEach((ch, i) => {
+  const span = document.createElement('span');
+  span.className = 'banner-char';
+  span.textContent = ch === ' ' ? '\u00A0' : ch;
+  span.style.color = colors[i % colors.length];
+  span.style.animationDelay = (i * 0.07) + 's';
+  span.style.animationDuration = (0.5 + Math.random() * 0.3) + 's';
+  span.style.textShadow = `3px 3px 0 rgba(0,0,0,0.35), 0 0 20px ${colors[i % colors.length]}88`;
+  bannerEl.appendChild(span);
+});
+
+// ── Marquee ──
+const emojis = ['🎉','🎂','🎈','✨','🌟','💜','🎁','🥳','🎊','🌈','💫','🎶','🍰','🦋','💖'];
+const marqueeEl = document.getElementById('marquee');
+const doubled = [...emojis, ...emojis, ...emojis, ...emojis];
+doubled.forEach(e => {
+  const d = document.createElement('span');
+  d.className = 'marquee-item';
+  d.textContent = e;
+  marqueeEl.appendChild(d);
+});
+
+// ── Sparkles ──
+const sparklesEl = document.getElementById('sparkles');
+const sparkColors = ['#FF2D8B','#FFE135','#00E5FF','#AAFF00','#BF00FF','#FF6B2B','#fff'];
+for (let i = 0; i < 50; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  const size = 6 + Math.random() * 12;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%; top:${Math.random()*100}%;
+    background:${sparkColors[Math.floor(Math.random()*sparkColors.length)]};
+    animation-duration:${1.5+Math.random()*2.5}s;
+    animation-delay:${Math.random()*3}s;
+    filter: drop-shadow(0 0 4px currentColor);
+  `;
+  sparklesEl.appendChild(s);
+}
+
+// ── Confetti ──
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+const COLS = ['#FF2D8B','#FF6B2B','#FFE135','#AAFF00','#00E5FF','#BF00FF','#ffffff'];
+const pieces = Array.from({length: 160}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight - window.innerHeight,
+  w: 5 + Math.random() * 12,
+  h: 3 + Math.random() * 7,
+  col: COLS[Math.floor(Math.random()*COLS.length)],
+  rot: Math.random() * Math.PI * 2,
+  rSpeed: (Math.random()-0.5)*0.12,
+  speed: 1.2 + Math.random()*2.5,
+  swing: (Math.random()-0.5)*1.5,
+  t: Math.random()*100,
+  shape: Math.random() > 0.5 ? 'rect' : 'circle'
+}));
+
+(function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p => {
+    p.t += 0.02;
+    p.y += p.speed;
+    p.rot += p.rSpeed;
+    p.x += Math.sin(p.t) * p.swing;
+    if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random()*canvas.width; }
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = p.col;
+    ctx.globalAlpha = 0.88;
+    if (p.shape === 'rect') {
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, 0, p.w/2, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+  });
+  requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
